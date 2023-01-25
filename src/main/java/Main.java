@@ -24,9 +24,13 @@ public class Main {
 
 
         String body = new String(response.getEntity().getContent().readAllBytes());
-        List<CatFacts> catFacts = mapper.readValue(body, new TypeReference<>(){});
+        List<CatFacts> catFacts = mapper.readValue(body, new TypeReference<>() {
+        });
 
-        catFacts = catFacts.stream().filter(catFact -> catFact.getUpVotes() != null && Integer.parseInt(catFact.getUpVotes()) > 0).sorted((a, b) -> Integer.parseInt(b.getUpVotes()) - Integer.parseInt(a.getUpVotes())).collect(Collectors.toList());
+        catFacts = catFacts.stream()
+                .filter(catFact -> catFact.getUpVotes() != null && Integer.parseInt(catFact.getUpVotes()) > 0)
+                .sorted((a, b) -> Integer.parseInt(b.getUpVotes()) - Integer.parseInt(a.getUpVotes()))
+                .collect(Collectors.toList());
         catFacts.forEach(System.out::println);
     }
 }
